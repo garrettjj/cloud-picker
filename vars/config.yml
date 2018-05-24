@@ -1,0 +1,10 @@
+---
+server_domain: jansen.sh
+normal_user_name: garrett 
+normal_user_password: $6$rounds=656000$ck4MYj7UqXa6gCCr$7/kn6ytOBUt4WHObek68KdAF3UBVSc0HupbzX8C1t1o.B0gcFZWbV7lou8iRuXSHcN51tib19wuH5ECk9Ne4U/
+linode_plan: 4
+# Fedora 28
+linode_distribution: 165
+# CentOS 7
+#linode_distribution: 129
+linode_datacenter: 6

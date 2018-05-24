@@ -1,0 +1,54 @@
+---
+- name: Basic setup of the new server
+  hosts: server 
+  user: root
+
+  vars_files:
+    - vars/config.yml
+  
+  vars:
+    server_fqdn: "{{ server_hostname }}.{{ server_domain }}"
+
+  tasks:
+  - name: Running system updates
+    package: 
+      name: '*'
+      state: latest
+      
+  - name: Set the timezone for the server to be UTC
+    command: timedatectl set-timezone 'America/New_York'
+    
+  - name: Set up a unique hostname
+    hostname: name={{ server_hostname }}
+
+  - name: Add the server's domain to the hosts file
+    lineinfile: dest=/etc/hosts
+                regexp='.*{{ item }}$'
+                line="{{ hostvars[item].ansible_default_ipv4.address }} {{ server_fqdn }} {{ server_hostname }}"
+                state=present
+    when: hostvars[item].ansible_default_ipv4.address is defined
+    with_items: "{{ groups['server'] }}"
+    
+
+  - name: Create a secondary, non-root user
+    user: name={{ normal_user_name }}
+         password='{{ normal_user_password }}'
+         shell=/bin/bash
+
+  - name: Add remote authorized key to allow future passwordless logins
+    authorized_key: user={{ normal_user_name }} key="{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
+
+  - name: Add normal user to sudoers
+    lineinfile: dest=/etc/sudoers
+                line="{{ normal_user_name }} ALL=(ALL) ALL"
+                state=present
+
+  - name: ssh key only
+    copy: src=files/ssh/sshd_config dest=/etc/ssh/sshd_config
+    notify: restart ssh
+
+  handlers:
+  - name: restart ssh
+    service: 
+      name: sshd
+      state: restarted
