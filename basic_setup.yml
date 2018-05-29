@@ -15,6 +15,14 @@
       name: '*'
       state: latest
       
+  - name: install basic packages
+    action: >
+      {{ ansible_pkg_mgr }} name={{ item }} state=present update_cache=yes
+    with_items:
+      - vim
+      - tmux
+      - git
+
   - name: Set the timezone for the server to be UTC
     command: timedatectl set-timezone 'America/New_York'
     
