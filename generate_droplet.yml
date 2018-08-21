@@ -1,0 +1,6 @@
+---
+# Ansible playbook to create and configure a DigitalOcean Droplet
+# 
+# Requires:
+#   ansible-playbook generate_droplet.yml --extra-vars "server_hostname=$name server_root_password=$password"
+#
