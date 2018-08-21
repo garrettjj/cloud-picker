@@ -6,3 +6,6 @@ Script to spin up a cloud server.
 * Unify into one script that invokes process
 * Expand roles of items being deployed
 * Include DigitalOcean library
+
+## Testing:
+* Testing Markdown.
