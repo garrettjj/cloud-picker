@@ -10,7 +10,7 @@
   gather_facts: false
 
   vars_files:
-    - vars/config.yml
+    - vars/linode-config.yml
 
   vars_prompt:
     - name: "linode_api_key"
