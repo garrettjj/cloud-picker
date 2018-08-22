@@ -22,10 +22,6 @@
     fail: msg="server_hostname needs to be defined via command line, e.g. --extra-vars server_hostname=$name"
     when: server_hostname is not defined
 
-  - name: Fail if server_root_password is not set
-    fail: msg="server_root_password needs to be defined via command line, e.g. --extra-vars server_root_password=$password"
-    when: server_root_password is not defined
-
   - name: Create a server via DigitalOcean API
     digital_ocean:
       api_token: "{{ do_api_token }}"
@@ -34,7 +30,7 @@
       region_id: nyc1
       image_id: fedora-28-x64
       private_networking: yes
-      ssh_pub_key: "{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
+      ssh_key_ids: "22418355"
       unique_name: yes
       wait: yes
       wait_timeout: 600
