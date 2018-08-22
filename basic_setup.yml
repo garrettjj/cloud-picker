@@ -2,9 +2,11 @@
 - name: Basic setup of the new server
   hosts: server 
   user: root
+  gather_facts: False
   pre_tasks:
     - name: Install Python
       raw: dnf -y install python python3
+      setup: gather_facts
       ignore_errors: yes
 
   vars_files:
