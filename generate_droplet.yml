@@ -42,13 +42,13 @@
   
   - name: Add Droplet to in-memory inventory
     add_host:
-      hostname: "{{ server.instance.ipv4 }}"
+      hostname: "{{ server.droplet.ip_address }}"
       groupname: "server"
 
   - name: Waiting for port 22 to listen
     wait_for:
       state: started
-      host: "{{ server.instance.ipv4 }}"
+      host: "{{ server.droplet.ip_address }}"
       port: 22
 
 - name: Import Basic Setup
