@@ -19,6 +19,8 @@
     action: >
       {{ ansible_pkg_mgr }} name={{ item }} state=present
     with_items:
+      - python 
+      - python3
       - vim
       - tmux
       - git
