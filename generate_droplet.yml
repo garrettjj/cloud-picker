@@ -34,6 +34,8 @@
       region_id: nyc1
       image_id: fedora-28-x64
       private_networking: yes
+      ssh_pub_key: "{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
+      unique_name: yes
       wait: yes
       wait_timeout: 600
       state: present
