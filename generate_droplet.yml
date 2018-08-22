@@ -26,7 +26,7 @@
     digital_ocean:
       api_token: "{{ do_api_token }}"
       name: "{{ server_hostname }}"
-      size_id: 2gb
+      size_id: s-1vcpu-2gb
       region_id: nyc1
       image_id: fedora-28-x64
       private_networking: yes
