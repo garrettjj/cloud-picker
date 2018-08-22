@@ -5,6 +5,7 @@
   pre_tasks:
     - name: Install Python
       raw: dnf -y install python python3
+      ignore_errors: yes
 
   vars_files:
     - vars/config.yml
