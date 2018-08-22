@@ -2,6 +2,9 @@
 - name: Basic setup of the new server
   hosts: server 
   user: root
+  pre_tasks:
+    - name: Install Python
+      raw: dnf -y install python python3
 
   vars_files:
     - vars/config.yml
@@ -19,8 +22,6 @@
     action: >
       {{ ansible_pkg_mgr }} name={{ item }} state=present
     with_items:
-      - python 
-      - python3
       - vim
       - tmux
       - git
