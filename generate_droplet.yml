@@ -4,3 +4,55 @@
 # Requires:
 #   ansible-playbook generate_droplet.yml --extra-vars "server_hostname=$name server_root_password=$password"
 #
+- name: Provision new server via the DigitalOcean API
+  hosts: localhost
+  connection: local
+  gather_facts: false
+
+  vars_files:
+    - vars/config.yml
+  
+  vars_prompt:
+    - name: "do_api_token"
+      prompt: "Please enter your APIv2 token"
+      private: no
+  
+  tasks:
+  - name: Fail if server_hostname is not set
+    fail: msg="server_hostname needs to be defined via command line, e.g. --extra-vars server_hostname=$name"
+    when: server_hostname is not defined
+
+  - name: Fail if server_root_password is not set
+    fail: msg="server_root_password needs to be defined via command line, e.g. --extra-vars server_root_password=$password"
+    when: server_root_password is not defined
+
+  - name: Create a server via DigitalOcean API
+    digital_ocean:
+      api_token: "{{ do_api_token }}"
+      name: "{{ server_hostname }}"
+      size_id: 2gb
+      region_id: nyc1
+      image_id: fedora-28-x64
+      private_networking: yes
+      wait: yes
+      wait_timeout: 600
+      state: present
+    register: server
+
+  - name: Show me the newly created Droplet
+    debug: var=server
+  
+  - name: Add Droplet to in-memory inventory
+    add_host:
+      hostname: "{{ server.instance.ipv4 }}"
+      groupname: "server"
+
+  - name: Waiting for port 22 to listen
+    wait_for:
+      state: started
+      host: "{{ server.instance.ipv4 }}"
+      port: 22
+
+- name: Import Basic Setup
+  import_playbook: basic_setup.yml
+... 
