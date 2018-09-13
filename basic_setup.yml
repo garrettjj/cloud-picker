@@ -6,8 +6,10 @@
   pre_tasks:
     - name: Install Python
       raw: dnf -y install python python3
-      setup: gather_facts
       ignore_errors: yes
+
+    - name: Gathering facts
+      setup: gather_facts
 
   vars_files:
     - vars/config.yml

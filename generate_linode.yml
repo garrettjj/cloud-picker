@@ -54,7 +54,6 @@
       state: started
       host: "{{ server.instance.ipv4 }}"
       port: 22
-
-- name: Import Basic Setup
-  import_playbook: basic_setup.yml
+      
+- import_playbook: basic_setup.yml
 ...
