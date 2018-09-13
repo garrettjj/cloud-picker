@@ -23,6 +23,7 @@
       - tmux
       - git
       - wget
+      - mtr
 
   - name: Set the timezone for the server to be UTC
     command: timedatectl set-timezone 'America/New_York'
