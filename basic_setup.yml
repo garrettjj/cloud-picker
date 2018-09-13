@@ -2,14 +2,6 @@
 - name: Basic setup of the new server
   hosts: server 
   user: root
-  gather_facts: False
-  pre_tasks:
-    - name: Install Python
-      raw: dnf -y install python python3
-      ignore_errors: yes
-
-    - name: Gathering facts
-      setup: gather_facts
 
   vars_files:
     - vars/config.yml
