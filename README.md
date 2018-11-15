@@ -9,3 +9,6 @@ Script to spin up a cloud server.
 
 ## Testing:
 * Testing Markdown.
+
+## Dependencies:
+* linode-python (Python 2)

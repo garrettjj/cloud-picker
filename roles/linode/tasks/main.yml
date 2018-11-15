@@ -1,0 +1,29 @@
+- name: Create a server via Linode API
+  linode:
+    api_key: "{{ linode_api_key }}"
+    name: "{{ server_hostname }}" 
+    plan: "{{ linode_plan }}"
+    datacenter: "{{ linode_datacenter }}"
+    distribution: "{{ linode_distribution }}"      
+    password: "{{ server_root_password }}" 
+    private_ip: yes
+    ssh_pub_key: "{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
+    wait: yes
+    wait_timeout: 600
+    state: present
+  register: server
+
+- name: Show me the newly created Linode
+  debug: var=server
+
+- name: Add Linode to in-memory inventory
+  add_host:
+    hostname: "{{ server.instance.ipv4 }}"
+    groupname: "server"
+
+- name: Waiting for port 22 to listen
+  wait_for:
+    state: started
+    host: "{{ server.instance.ipv4 }}"
+    port: 22
+      
