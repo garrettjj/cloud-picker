@@ -2,10 +2,11 @@
 
 Script to spin up a cloud server.
 
+## CAUTION:
+*This is being removed in favor of individualized roles and a collection of playbooks that utilizes them*
+
 ## To-Do:
-* Unify into one script that invokes process
-* Expand roles of items being deployed
-* Include DigitalOcean library
+* Remove repository in favor of Linode creation role (with example).
 
 ## Testing:
 * Testing Markdown.
