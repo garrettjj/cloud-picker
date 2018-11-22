@@ -1,3 +1,4 @@
+# Comment out kernel_id to use Latest 64-bit. Currently using GRUB2 for stability and convenience.
 - name: Create a server via Linode API
   linode:
     api_key: "{{ linode_api_key }}"
@@ -5,6 +6,7 @@
     plan: "{{ linode_plan }}"
     datacenter: "{{ linode_datacenter }}"
     distribution: "{{ linode_distribution }}"      
+    kernel_id: "210"
     password: "{{ server_root_password }}" 
     private_ip: yes
     ssh_pub_key: "{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
